@@ -19,4 +19,25 @@ namespace eCommerceSite.Models
 
         public DateTime? DateOfBirth { get; set; }
     }
+
+    public class RegisterViewModel
+    {
+        [Required]
+        public string Email { get; set; }
+
+        [Compare(nameof(Email))]
+        [Required]
+        public string ConfirmEmail { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)] // Time is ignored
+        public string Password { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [Compare(nameof(Password))]
+        public string ConfirmPassword { get; set; }
+
+        public DateTime? DateOfBirth { get; set; }
+    }
 }
