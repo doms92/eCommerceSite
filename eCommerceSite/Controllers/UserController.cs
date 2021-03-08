@@ -72,6 +72,7 @@ namespace eCommerceSite.Controllers
                 // redirect to home page
                 return RedirectToAction("Index", "Home");
             }
+            //
             return View(reg);
         }
 
