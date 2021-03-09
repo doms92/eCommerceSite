@@ -26,8 +26,13 @@ namespace eCommerceSite.Controllers
         {
             // Get all products from database
             List<Product> products =
+<<<<<<< Updated upstream
               await (from p in _context.Products
                 select p).ToListAsync();
+=======
+              await(from p in _context.Products
+                    select p).ToListAsync();
+>>>>>>> Stashed changes
 
             // Send list of products to view to be displayed
             return View(products);
