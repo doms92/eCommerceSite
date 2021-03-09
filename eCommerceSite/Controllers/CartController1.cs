@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using eCommerceSite.Data;
+using eCommerceSite.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +11,23 @@ namespace eCommerceSite.Controllers
 {
     public class CartController1 : Controller
     {
-        public IActionResult Add(int id) // Id of the product to add
+        private readonly ProductContext _context;
+        public CartController1(ProductContext context)
+        {
+            _context = context;
+        }
+
+        /// <summary>
+        /// Adds a product to the shopping cart
+        /// </summary>
+        /// <param name="id">The id of the product </param>
+        /// <returns></returns>
+        public async Task<IActionResult> Add(int id) 
         {
             // Get product from the database
+            Product p = await (from products in _context.Products
+                         where products.ProductId == id
+                         select products).SingleAsync();
             // Add product to cart cookie
 
             // Redirect back to previous page
