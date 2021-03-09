@@ -36,13 +36,7 @@ namespace eCommerceSite.Controllers
             ViewData["MaxPage"] = totalPages;
 
             // Get all products from database
-            List<Product> products =
-              await (from p in _context.Products
-                     orderby p.Title ascending
-                     select p)
-                     .Skip(0)
-                     .Take(PageSize)
-                     .ToListAsync();
+            List<Product> products = _context.Products.ToList();
 
             // Send list of products to view to be displayed
             return View(products);
