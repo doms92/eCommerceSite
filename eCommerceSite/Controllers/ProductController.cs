@@ -22,12 +22,19 @@ namespace eCommerceSite.Controllers
         /// Displays a view that lists all products
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
+            int pageNum = id ?? 1;
+            const int PageSize = 3;
+
             // Get all products from database
             List<Product> products =
               await (from p in _context.Products
-                select p).ToListAsync();
+                     orderby p.Title ascending
+                     select p)
+                     .Skip(0)
+                     .Take(PageSize)
+                     .ToListAsync();
 
             // Send list of products to view to be displayed
             return View(products);
