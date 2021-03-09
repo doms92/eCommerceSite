@@ -28,8 +28,7 @@ namespace eCommerceSite.Controllers
             const int PageSize = 3;
             ViewData["CurrentPage"] = pageNum;
 
-            int numProducts = await (from p in _context.Products
-                               select p).CountAsync();
+            int numProducts = await ProductDb.GetTotalProductsAsync(_context);
 
             int totalPages = (int)Math.Ceiling((double)numProducts / PageSize);
 
@@ -37,16 +36,8 @@ namespace eCommerceSite.Controllers
 
             // Get all products from database
 
-            List<Product> products = _context.Products.ToList();
-
             List<Product> products =
-
-              await (from p in _context.Products
-                select p).ToListAsync();
-
-              await(from p in _context.Products
-                    select p).ToListAsync();
-
+               await ProductDb.GetProductsAsync(_context, PageSize, pageNum);
 
             // Send list of products to view to be displayed
             return View(products);
@@ -63,9 +54,7 @@ namespace eCommerceSite.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Add to DB
-                _context.Products.Add(p);
-               await _context.SaveChangesAsync();
+               await ProductDb.AddProductAsync(_context, p);
 
                 TempData["Message"] = $"{p.Title} was added successfully";
 
