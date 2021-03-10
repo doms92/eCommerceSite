@@ -22,17 +22,31 @@ namespace eCommerceSite.Controllers
         /// Displays a view that lists all products
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
+            int pageNum = id ?? 1;
+            const int PageSize = 3;
+            ViewData["CurrentPage"] = pageNum;
+
+            int numProducts = await (from p in _context.Products
+                               select p).CountAsync();
+
+            int totalPages = (int)Math.Ceiling((double)numProducts / PageSize);
+
+            ViewData["MaxPage"] = totalPages;
+
             // Get all products from database
+
+            List<Product> products = _context.Products.ToList();
+
             List<Product> products =
-<<<<<<< Updated upstream
+
               await (from p in _context.Products
                 select p).ToListAsync();
-=======
+
               await(from p in _context.Products
                     select p).ToListAsync();
->>>>>>> Stashed changes
+
 
             // Send list of products to view to be displayed
             return View(products);

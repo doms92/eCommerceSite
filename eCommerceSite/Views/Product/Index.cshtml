@@ -39,14 +39,35 @@
                 <td>
                     <a class="btn btn-secondary" asp-route-id="@p.ProductId" asp-action="Edit">Edit</a>
                     <a class="btn btn-danger" asp-route-id="@p.ProductId" asp-action="Delete">Delete</a>
+                    <a class="btn btn-primary" 
+                       asp-route-id="@p.ProductId" 
+                       asp-controller="Cart" 
+                       asp-action="Add">
+                    Add to Cart
+                    </a>
                 </td>
             </tr>
         }
     </tbody>
     </table>
 </div>
+@*Print page numbers*@
+<ul class="pagination">
+    @for (int i = 1; i <= (int)ViewData["MaxPage"]; i++)
+    {
+            string classes = "page-item";
+            if(i == (int)ViewData["CurrentPage"])
+            {
+                classes += " active ";
+            }
 
-
+            <li class="@classes">
+                Page   <a class="page-link" asp-action="Index" asp-route-id="@i">
+                    @i
+                </a>
+            </li>
+        }
+</ul>
 
 
 
