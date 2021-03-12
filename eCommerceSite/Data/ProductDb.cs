@@ -16,8 +16,8 @@ namespace eCommerceSite.Data
         /// <returns></returns>
         public static async Task<int> GetTotalProductsAsync(ProductContext _context)
         {
-           return await(from p in _context.Products
-                  select p).CountAsync();
+            return await (from p in _context.Products
+                          select p).CountAsync();
         }
 
         /// <summary>
@@ -30,20 +30,29 @@ namespace eCommerceSite.Data
 
         public static async Task<List<Product>> GetProductsAsync(ProductContext _context, int pageSize, int pageNum)
         {
-             return await(from p in _context.Products
-                     orderby p.Title ascending
-                     select p)
-                     .Skip(pageSize* (pageNum - 1))
-                     .Take(pageSize)
-                .ToListAsync();
+            return await (from p in _context.Products
+                          orderby p.Title ascending
+                          select p)
+                    .Skip(pageSize * (pageNum - 1))
+                    .Take(pageSize)
+               .ToListAsync();
 
-    }
+        }
 
         public static async Task<Product> AddProductAsync(ProductContext _context, Product p)
         {
-           // Add to DB
-                _context.Products.Add(p);
+            // Add to DB
+            _context.Products.Add(p);
             await _context.SaveChangesAsync();
+            return p;
+        }
+
+        public static async Task<Product> GetProductAsync(ProductContext context, int prodId)
+        {
+            // Get product from the database
+            Product p = await (from products in context.Products
+                               where products.ProductId == prodId
+                               select products).SingleAsync();
             return p;
         }
     }
