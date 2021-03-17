@@ -65,6 +65,7 @@ namespace eCommerceSite.Controllers
 
             return View();
         }
+
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -87,6 +88,7 @@ namespace eCommerceSite.Controllers
             return View(p);
         }
 
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
             Product p = await ProductDb.GetProductAsync(_context, id);
