@@ -21,7 +21,7 @@ namespace eCommerceSite.Controllers
             _httpContext = httpContext;
         }
 
-        public async Task<IActionResult> Add(int id)
+        public async Task<IActionResult> Add(int id, string prevUrl)
         {
             Product p = await ProductDb.GetProductAsync(_context, id);
 
@@ -30,7 +30,7 @@ namespace eCommerceSite.Controllers
             TempData["Message"] = p.Title +  " added successfully";
 
             // Redirect back to previous page
-            return RedirectToAction("Index", "Product");
+            return Redirect(prevUrl);
         }
 
         public IActionResult Summary()
